@@ -1,6 +1,7 @@
 import React from "react";
 
 const Question = ({ ques, selected, onSelect }) => {
+  document.title= `question`
   if (!ques) return null; // safety check
 
   return (

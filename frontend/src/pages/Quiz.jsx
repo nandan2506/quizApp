@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 const Question = lazy(() => import("../components/Question"));
 
 export default function Quiz() {
-const baseApi = import.meta.env.VITE_BASE_API;
+const baseApi = 'https://quizapp-129d.onrender.com'
+// const baseApi = import.meta.env.VITE_BASE_API
 
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
   const [currentQues, setCurrQues] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [started, setStarted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120);
   const [submitting, setSubmitting] = useState(false);
 
@@ -34,7 +34,6 @@ const baseApi = import.meta.env.VITE_BASE_API;
 
   // timer
   useEffect(() => {
-    if (!started) return;
     if (timeLeft <= 0) {
       handleSubmit();
       return;
@@ -42,7 +41,7 @@ const baseApi = import.meta.env.VITE_BASE_API;
 
     const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
     return () => clearInterval(timer);
-  }, [started, timeLeft]);
+  }, [timeLeft]);
 
   const handleAnswer = useCallback((qid, optIndex) => {
     setAnswers((prev) => ({ ...prev, [qid]: optIndex }));
@@ -67,22 +66,22 @@ const baseApi = import.meta.env.VITE_BASE_API;
 
   if (loading) return <h1 className="text-center text-xl">Loading...</h1>;
 
-  if (!started) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-100 to-blue-100">
-        <h1 className="text-4xl font-extrabold mb-6 text-indigo-700">📘 Welcome to Quiz</h1>
-        <button
-          className="px-8 py-3 bg-indigo-600 text-white rounded-xl shadow-lg hover:bg-indigo-700 transition-all"
-          onClick={() => {
-            setStarted(true);
-            setCurrQues(0);
-          }}
-        >
-          Start Quiz
-        </button>
-      </div>
-    );
-  }
+  // if (!started) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-100 to-blue-100">
+  //       <h1 className="text-4xl font-extrabold mb-6 text-indigo-700">📘 Welcome to Quiz</h1>
+  //       <button
+  //         className="px-8 py-3 bg-indigo-600 text-white rounded-xl shadow-lg hover:bg-indigo-700 transition-all"
+  //         onClick={() => {
+  //           setStarted(true);
+  //           setCurrQues(0);
+  //         }}
+  //       >
+  //         Start Quiz
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   const q = questions[currentQues];
 
